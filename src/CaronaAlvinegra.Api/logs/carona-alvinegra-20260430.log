@@ -2340,3 +2340,19 @@ Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving 
 2026-04-30 19:47:58.438 -03:00 [INF] HTTP GET /css/app.css responded 200 in 2.4566 ms
 2026-04-30 19:47:58.439 -03:00 [INF] HTTP GET /js/app.js responded 200 in 1.5578 ms
 2026-04-30 19:47:58.548 -03:00 [INF] HTTP GET /favicon.ico responded 404 in 1.9717 ms
+2026-04-30 19:57:09.663 -03:00 [WRN] The navigation 'Grupo.Membros' was first mapped explicitly and then ignored. Consider not mapping the navigation in the first place.
+2026-04-30 19:57:10.848 -03:00 [INF] HTTP GET /health responded 200 in 22.0986 ms
+2026-04-30 19:57:11.473 -03:00 [INF] HTTP GET / responded 302 in 2.6495 ms
+2026-04-30 19:57:11.491 -03:00 [INF] HTTP GET /index.html responded 304 in 9.7881 ms
+2026-04-30 19:57:11.601 -03:00 [INF] HTTP GET /css/app.css responded 304 in 1.7781 ms
+2026-04-30 19:57:11.603 -03:00 [INF] HTTP GET /js/api.js responded 304 in 0.8112 ms
+2026-04-30 19:57:11.603 -03:00 [INF] HTTP GET /js/app.js responded 304 in 0.7001 ms
+2026-04-30 19:57:11.697 -03:00 [INF] HTTP GET /favicon.ico responded 404 in 1.7061 ms
+2026-04-30 19:57:18.334 -03:00 [INF] HTTP GET /api/jogos responded 200 in 138.2742 ms
+2026-04-30 19:57:18.385 -03:00 [INF] HTTP GET /api/rotas responded 200 in 189.2220 ms
+2026-04-30 19:57:18.388 -03:00 [INF] HTTP GET /api/usuarios responded 200 in 193.5054 ms
+2026-04-30 19:57:18.422 -03:00 [INF] HTTP GET /api/grupos responded 200 in 228.0348 ms
+2026-04-30 19:57:42.062 -03:00 [INF] HTTP GET /api/rotas responded 200 in 35.9328 ms
+2026-04-30 19:57:42.063 -03:00 [INF] HTTP GET /api/jogos responded 200 in 36.4020 ms
+2026-04-30 19:57:42.065 -03:00 [INF] HTTP GET /api/usuarios responded 200 in 39.4282 ms
+2026-04-30 19:57:42.067 -03:00 [INF] HTTP GET /api/grupos responded 200 in 41.5413 ms
