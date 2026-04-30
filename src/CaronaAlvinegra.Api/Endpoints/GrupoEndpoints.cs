@@ -36,7 +36,7 @@ public static class GrupoEndpoints
         group.MapPost("/{id:guid}/membros/{usuarioId:guid}", async (Guid id, Guid usuarioId, GrupoAppService service, CancellationToken ct) =>
         {
             var result = await service.AdicionarMembroAsync(id, usuarioId, ct);
-            return result ? Results.Ok() : Results.NotFound();
+            return result ? Results.NoContent() : Results.NotFound();
         })
         .WithName("AdicionarMembro")
         .WithOpenApi();

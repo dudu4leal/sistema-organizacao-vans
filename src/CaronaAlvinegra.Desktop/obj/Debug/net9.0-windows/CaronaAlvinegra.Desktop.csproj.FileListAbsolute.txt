@@ -23,3 +23,4 @@ c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Des
 c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Desktop\obj\Debug\net9.0-windows\CaronaAlvinegra.Desktop.pdb
 c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Desktop\obj\Debug\net9.0-windows\CaronaAlvinegra.Desktop.genruntimeconfig.cache
 c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Desktop\obj\Debug\net9.0-windows\ref\CaronaAlvinegra.Desktop.dll
+C:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Desktop\obj\Debug\net9.0-windows\CaronaAlvinegra.Desktop.sourcelink.json

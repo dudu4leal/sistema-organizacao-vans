@@ -47,6 +47,7 @@ builder.Services.AddScoped<IGrupoRepository, GrupoRepository>();
 builder.Services.AddScoped<IJogoRepository, JogoRepository>();
 builder.Services.AddScoped<IPassageiroRepository, PassageiroRepository>();
 builder.Services.AddScoped<IRotaRepository, RotaRepository>();
+builder.Services.AddScoped<IPresencaRepository, PresencaRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // AutoMapper
@@ -83,6 +84,10 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseSerilogRequestLogging();
 app.UseCors();
 
+// Static files (SPA frontend)
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -110,7 +115,7 @@ app.MapRotaEndpoints();
 app.MapJogoEndpoints();
 app.MapPresencaEndpoints();
 
-app.MapGet("/", () => Results.Redirect("/swagger"));
+app.MapGet("/", () => Results.Redirect("/index.html"));
 app.MapGet("/health", () => Results.Ok(new { status = "healthy", timestamp = DateTime.UtcNow }));
 
 await app.RunAsync();

@@ -41,7 +41,7 @@ static class Program
 
         // Inicia o formulário WinForms
         ApplicationConfiguration.Initialize();
-        var form = new Form1(ApiUrl + "/swagger");
+        var form = new Form1(ApiUrl);
         form.FormClosed += (_, _) => KillApiProcess();
         System.Windows.Forms.Application.Run(form);
     }

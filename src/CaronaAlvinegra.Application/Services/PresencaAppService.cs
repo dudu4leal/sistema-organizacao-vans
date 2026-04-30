@@ -11,17 +11,20 @@ namespace CaronaAlvinegra.Application.Services;
 /// </summary>
 public class PresencaAppService
 {
+    private readonly IPresencaRepository _presencaRepo;
     private readonly IPassageiroRepository _passageiroRepo;
     private readonly IUsuarioRepository _usuarioRepo;
     private readonly IUnitOfWork _uow;
     private readonly IMapper _mapper;
 
     public PresencaAppService(
+        IPresencaRepository presencaRepo,
         IPassageiroRepository passageiroRepo,
         IUsuarioRepository usuarioRepo,
         IUnitOfWork uow,
         IMapper mapper)
     {
+        _presencaRepo = presencaRepo;
         _passageiroRepo = passageiroRepo;
         _usuarioRepo = usuarioRepo;
         _uow = uow;
@@ -39,8 +42,15 @@ public class PresencaAppService
         var usuario = await _usuarioRepo.GetByIdAsync(request.UsuarioId, ct);
         if (usuario is null) return null;
 
-        // Criar presenca
+        // Verifica se já existe presença para este usuário neste jogo
+        var presencasExistentes = await _presencaRepo.FindAsync(
+            p => p.UsuarioId == request.UsuarioId && p.JogoId == jogoId, ct);
+        if (presencasExistentes.Any())
+            throw new DomainException("Usuário já possui presença marcada neste jogo.");
+
+        // Criar e salvar a Presenca PRIMEIRO (para que o Passageiro possa referenciá-la)
         var presenca = new Presenca(request.UsuarioId, jogoId, request.RotaEfetivaId);
+        await _presencaRepo.AddAsync(presenca, ct);
 
         // Criar passageiro (instância do usuário para este jogo)
         var passageiro = new Passageiro(

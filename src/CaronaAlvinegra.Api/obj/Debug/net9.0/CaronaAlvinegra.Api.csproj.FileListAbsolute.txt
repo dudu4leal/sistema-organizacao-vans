@@ -90,3 +90,9 @@ c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api
 c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\obj\Debug\net9.0\CaronaAlvinegra.Api.pdb
 C:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\obj\Debug\net9.0\CaronaAlvinegra.Api.genruntimeconfig.cache
 C:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\obj\Debug\net9.0\ref\CaronaAlvinegra.Api.dll
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\bin\Debug\net9.0\CaronaAlvinegra.Api.staticwebassets.runtime.json
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\obj\Debug\net9.0\CaronaAlvinegra.Api.sourcelink.json
+C:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\obj\Debug\net9.0\compressed\w6j8xsmkyc-12otuwd3it.gz
+C:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\obj\Debug\net9.0\compressed\fwq74naj4j-4wt8kpkbsr.gz
+C:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\obj\Debug\net9.0\compressed\sndeml2fee-qm35be7yxi.gz
+C:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\obj\Debug\net9.0\compressed\b4lbt22jrc-pxklldq0rz.gz

@@ -15,3 +15,4 @@ c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Inf
 c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\obj\Debug\net9.0\CaronaAlvinegra.Infrastructure.pdb
 c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\obj\Debug\net9.0\CaronaAlvinegra.Infrastructure.genruntimeconfig.cache
 c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\obj\Debug\net9.0\ref\CaronaAlvinegra.Infrastructure.dll
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\obj\Debug\net9.0\CaronaAlvinegra.Infrastructure.sourcelink.json

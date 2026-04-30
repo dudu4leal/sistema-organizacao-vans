@@ -9,3 +9,4 @@ c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Dom
 c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Domain\obj\Debug\net9.0\refint\CaronaAlvinegra.Domain.dll
 c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Domain\obj\Debug\net9.0\CaronaAlvinegra.Domain.pdb
 c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Domain\obj\Debug\net9.0\ref\CaronaAlvinegra.Domain.dll
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Domain\obj\Debug\net9.0\CaronaAlvinegra.Domain.sourcelink.json
