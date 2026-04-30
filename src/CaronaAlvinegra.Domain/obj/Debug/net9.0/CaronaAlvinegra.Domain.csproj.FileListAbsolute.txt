@@ -1,0 +1,11 @@
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Domain\bin\Debug\net9.0\CaronaAlvinegra.Domain.deps.json
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Domain\bin\Debug\net9.0\CaronaAlvinegra.Domain.dll
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Domain\bin\Debug\net9.0\CaronaAlvinegra.Domain.pdb
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Domain\obj\Debug\net9.0\CaronaAlvinegra.Domain.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Domain\obj\Debug\net9.0\CaronaAlvinegra.Domain.AssemblyInfoInputs.cache
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Domain\obj\Debug\net9.0\CaronaAlvinegra.Domain.AssemblyInfo.cs
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Domain\obj\Debug\net9.0\CaronaAlvinegra.Domain.csproj.CoreCompileInputs.cache
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Domain\obj\Debug\net9.0\CaronaAlvinegra.Domain.dll
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Domain\obj\Debug\net9.0\refint\CaronaAlvinegra.Domain.dll
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Domain\obj\Debug\net9.0\CaronaAlvinegra.Domain.pdb
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Domain\obj\Debug\net9.0\ref\CaronaAlvinegra.Domain.dll

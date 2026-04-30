@@ -1,0 +1,55 @@
+2026-04-30 16:06:24.783 -03:00 [WRN] The navigation 'Grupo.Membros' was first mapped explicitly and then ignored. Consider not mapping the navigation in the first place.
+2026-04-30 16:06:57.276 -03:00 [INF] HTTP GET /health responded 200 in 26.1023 ms
+2026-04-30 16:07:06.878 -03:00 [INF] HTTP GET /rotas responded 404 in 0.8513 ms
+2026-04-30 16:07:06.920 -03:00 [INF] HTTP GET /usuarios responded 404 in 1.4197 ms
+2026-04-30 16:07:30.313 -03:00 [INF] HTTP GET /api/rotas responded 200 in 122.2318 ms
+2026-04-30 16:07:30.461 -03:00 [ERR] HTTP GET /api/usuarios responded 500 in 105.9247 ms
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+List`1 -> IEnumerable`1
+System.Collections.Generic.List`1[[CaronaAlvinegra.Domain.Entities.Usuario, CaronaAlvinegra.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[CaronaAlvinegra.Application.DTOs.UsuarioResponse, CaronaAlvinegra.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+ ---> System.ArgumentException: CaronaAlvinegra.Application.DTOs.UsuarioResponse needs to have a constructor with 0 args or only optional args. Validate your configuration for details. (Parameter 'type')
+   at lambda_method260(Closure, Object, IEnumerable`1, ResolutionContext)
+   --- End of inner exception stack trace ---
+   at lambda_method260(Closure, Object, IEnumerable`1, ResolutionContext)
+   at CaronaAlvinegra.Application.Services.UsuarioAppService.ListarAsync(CancellationToken ct) in c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Application\Services\UsuarioAppService.cs:line 48
+   at CaronaAlvinegra.Api.Endpoints.UsuarioEndpoints.<>c.<<MapUsuarioEndpoints>b__0_1>d.MoveNext() in c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\Endpoints\UsuarioEndpoints.cs:line 22
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-04-30 16:07:30.494 -03:00 [ERR] Unhandled exception
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+List`1 -> IEnumerable`1
+System.Collections.Generic.List`1[[CaronaAlvinegra.Domain.Entities.Usuario, CaronaAlvinegra.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[CaronaAlvinegra.Application.DTOs.UsuarioResponse, CaronaAlvinegra.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+ ---> System.ArgumentException: CaronaAlvinegra.Application.DTOs.UsuarioResponse needs to have a constructor with 0 args or only optional args. Validate your configuration for details. (Parameter 'type')
+   at lambda_method260(Closure, Object, IEnumerable`1, ResolutionContext)
+   --- End of inner exception stack trace ---
+   at lambda_method260(Closure, Object, IEnumerable`1, ResolutionContext)
+   at CaronaAlvinegra.Application.Services.UsuarioAppService.ListarAsync(CancellationToken ct) in c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Application\Services\UsuarioAppService.cs:line 48
+   at CaronaAlvinegra.Api.Endpoints.UsuarioEndpoints.<>c.<<MapUsuarioEndpoints>b__0_1>d.MoveNext() in c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\Endpoints\UsuarioEndpoints.cs:line 22
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at CaronaAlvinegra.Api.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\Middleware\ExceptionHandlingMiddleware.cs:line 22
+2026-04-30 16:07:30.581 -03:00 [INF] HTTP GET /api/grupos responded 200 in 52.6748 ms
+2026-04-30 16:07:30.637 -03:00 [INF] HTTP GET /api/jogos responded 200 in 12.8145 ms
+2026-04-30 16:11:56.877 -03:00 [WRN] The navigation 'Grupo.Membros' was first mapped explicitly and then ignored. Consider not mapping the navigation in the first place.
+2026-04-30 16:12:27.696 -03:00 [INF] HTTP GET /api/usuarios responded 200 in 206.5620 ms
+2026-04-30 16:14:36.614 -03:00 [WRN] The navigation 'Grupo.Membros' was first mapped explicitly and then ignored. Consider not mapping the navigation in the first place.
+2026-04-30 16:14:37.331 -03:00 [INF] HTTP GET /health responded 200 in 15.4332 ms
+2026-04-30 16:14:38.305 -03:00 [INF] HTTP GET /swagger responded 301 in 2.6046 ms
+2026-04-30 16:14:38.446 -03:00 [INF] HTTP GET /swagger/index.html responded 200 in 132.9962 ms
+2026-04-30 16:14:38.474 -03:00 [INF] HTTP GET /swagger/index.js responded 200 in 0.4288 ms
+2026-04-30 16:14:38.477 -03:00 [INF] HTTP GET /swagger/index.css responded 200 in 4.2136 ms
+2026-04-30 16:14:38.496 -03:00 [INF] HTTP GET /swagger/swagger-ui-standalone-preset.js responded 200 in 21.8308 ms
+2026-04-30 16:14:38.496 -03:00 [INF] HTTP GET /swagger/swagger-ui.css responded 200 in 25.7393 ms
+2026-04-30 16:14:38.517 -03:00 [INF] HTTP GET /swagger/swagger-ui-bundle.js responded 200 in 43.9183 ms
+2026-04-30 16:14:38.720 -03:00 [INF] HTTP GET /swagger/favicon-32x32.png responded 200 in 0.4151 ms
+2026-04-30 16:14:38.922 -03:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 223.2763 ms

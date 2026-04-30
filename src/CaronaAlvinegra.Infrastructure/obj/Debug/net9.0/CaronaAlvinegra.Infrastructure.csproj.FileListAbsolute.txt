@@ -1,0 +1,17 @@
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\obj\Debug\net9.0\CaronaAlvinegra.Infrastructure.csproj.AssemblyReference.cache
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\obj\Debug\net9.0\CaronaAlvinegra.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\obj\Debug\net9.0\CaronaAlvinegra.Infrastructure.AssemblyInfoInputs.cache
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\obj\Debug\net9.0\CaronaAlvinegra.Infrastructure.AssemblyInfo.cs
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\obj\Debug\net9.0\CaronaAlvinegra.Infrastructure.csproj.CoreCompileInputs.cache
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\bin\Debug\net9.0\CaronaAlvinegra.Infrastructure.deps.json
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\bin\Debug\net9.0\CaronaAlvinegra.Infrastructure.runtimeconfig.json
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\bin\Debug\net9.0\CaronaAlvinegra.Infrastructure.dll
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\bin\Debug\net9.0\CaronaAlvinegra.Infrastructure.pdb
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\bin\Debug\net9.0\CaronaAlvinegra.Domain.dll
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\bin\Debug\net9.0\CaronaAlvinegra.Domain.pdb
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\obj\Debug\net9.0\CaronaAl.0BB237C0.Up2Date
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\obj\Debug\net9.0\CaronaAlvinegra.Infrastructure.dll
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\obj\Debug\net9.0\refint\CaronaAlvinegra.Infrastructure.dll
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\obj\Debug\net9.0\CaronaAlvinegra.Infrastructure.pdb
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\obj\Debug\net9.0\CaronaAlvinegra.Infrastructure.genruntimeconfig.cache
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Infrastructure\obj\Debug\net9.0\ref\CaronaAlvinegra.Infrastructure.dll

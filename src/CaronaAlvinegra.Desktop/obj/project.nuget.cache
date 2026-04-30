@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "9NPAtzqioLc=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Desktop\\CaronaAlvinegra.Desktop.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dudsl\\.nuget\\packages\\microsoft.web.webview2\\1.0.3065.39\\microsoft.web.webview2.1.0.3065.39.nupkg.sha512"
+  ],
+  "logs": []
+}
