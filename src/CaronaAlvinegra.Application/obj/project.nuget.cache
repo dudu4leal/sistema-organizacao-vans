@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0w8YOuDW+38=",
+  "dgSpecHash": "s5Wt0nZTLmQ=",
   "success": true,
-  "projectFilePath": "C:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Application\\CaronaAlvinegra.Application.csproj",
+  "projectFilePath": "c:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Application\\CaronaAlvinegra.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dudsl\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\dudsl\\.nuget\\packages\\fluentvalidation\\11.11.0\\fluentvalidation.11.11.0.nupkg.sha512",
@@ -15,10 +15,10 @@
     {
       "code": "NU1903",
       "level": "Warning",
-      "message": "O pacote 'AutoMapper' 13.0.1 tem uma alta vulnerabilidade de gravidade conhecida, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
-      "projectPath": "C:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Application\\CaronaAlvinegra.Application.csproj",
+      "message": "Package 'AutoMapper' 13.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
+      "projectPath": "c:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Application\\CaronaAlvinegra.Application.csproj",
       "warningLevel": 1,
-      "filePath": "C:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Application\\CaronaAlvinegra.Application.csproj",
+      "filePath": "c:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Application\\CaronaAlvinegra.Application.csproj",
       "libraryId": "AutoMapper",
       "targetGraphs": [
         "net9.0"

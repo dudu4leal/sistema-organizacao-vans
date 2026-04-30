@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1g3XHA4OvI0=",
+  "dgSpecHash": "dmxLYkAMSSQ=",
   "success": true,
-  "projectFilePath": "C:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Infrastructure\\CaronaAlvinegra.Infrastructure.csproj",
+  "projectFilePath": "c:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Infrastructure\\CaronaAlvinegra.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dudsl\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\dudsl\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",

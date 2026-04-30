@@ -2332,3 +2332,11 @@ Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving 
 2026-04-30 19:00:13.698 -03:00 [INF] HTTP GET /api/usuarios responded 200 in 1.0760 ms
 2026-04-30 19:00:13.698 -03:00 [INF] HTTP GET /api/rotas responded 200 in 0.6632 ms
 2026-04-30 19:00:13.698 -03:00 [INF] HTTP GET /api/grupos responded 200 in 1.2239 ms
+2026-04-30 19:47:56.037 -03:00 [WRN] The navigation 'Grupo.Membros' was first mapped explicitly and then ignored. Consider not mapping the navigation in the first place.
+2026-04-30 19:47:57.406 -03:00 [INF] HTTP GET /health responded 200 in 31.4154 ms
+2026-04-30 19:47:58.302 -03:00 [INF] HTTP GET / responded 302 in 2.3454 ms
+2026-04-30 19:47:58.360 -03:00 [INF] HTTP GET /index.html responded 200 in 49.5797 ms
+2026-04-30 19:47:58.438 -03:00 [INF] HTTP GET /js/api.js responded 200 in 1.8234 ms
+2026-04-30 19:47:58.438 -03:00 [INF] HTTP GET /css/app.css responded 200 in 2.4566 ms
+2026-04-30 19:47:58.439 -03:00 [INF] HTTP GET /js/app.js responded 200 in 1.5578 ms
+2026-04-30 19:47:58.548 -03:00 [INF] HTTP GET /favicon.ico responded 404 in 1.9717 ms

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Domain\\CaronaAlvinegra.Domain.csproj": {}
+    "c:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Domain\\CaronaAlvinegra.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Domain\\CaronaAlvinegra.Domain.csproj": {
+    "c:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Domain\\CaronaAlvinegra.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Domain\\CaronaAlvinegra.Domain.csproj",
+        "projectUniqueName": "c:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Domain\\CaronaAlvinegra.Domain.csproj",
         "projectName": "CaronaAlvinegra.Domain",
-        "projectPath": "C:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Domain\\CaronaAlvinegra.Domain.csproj",
+        "projectPath": "c:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Domain\\CaronaAlvinegra.Domain.csproj",
         "packagesPath": "C:\\Users\\dudsl\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Domain\\obj\\",
+        "outputPath": "c:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\dudsl\\AppData\\Roaming\\NuGet\\NuGet.Config",

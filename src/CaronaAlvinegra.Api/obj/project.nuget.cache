@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Jpc7/whuWmY=",
+  "dgSpecHash": "hqtLFBKxpU0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Api\\CaronaAlvinegra.Api.csproj",
+  "projectFilePath": "c:\\Users\\dudsl\\Documents\\GitHub\\sistema-organizacao-vans\\src\\CaronaAlvinegra.Api\\CaronaAlvinegra.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dudsl\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\dudsl\\.nuget\\packages\\fluentvalidation\\11.11.0\\fluentvalidation.11.11.0.nupkg.sha512",

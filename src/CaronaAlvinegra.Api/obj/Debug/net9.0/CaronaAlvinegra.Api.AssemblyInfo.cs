@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CaronaAlvinegra.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+96d5fbd75e72babd694ca86de0a1c623cf0b9f02")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b9ba08d1991db2da2064be42f473742db11d1f9f")]
 [assembly: System.Reflection.AssemblyProductAttribute("CaronaAlvinegra.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CaronaAlvinegra.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
