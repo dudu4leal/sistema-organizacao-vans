@@ -10,5 +10,8 @@ public class GrupoValidator : AbstractValidator<GrupoRequest>
         RuleFor(x => x.Nome)
             .NotEmpty().WithMessage("Nome do grupo é obrigatório.")
             .MaximumLength(100);
+
+        RuleFor(x => x.RotaId)
+            .NotEmpty().WithMessage("Rota do grupo é obrigatória.");
     }
 }

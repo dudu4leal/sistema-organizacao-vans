@@ -10,9 +10,6 @@ public class UsuarioValidator : AbstractValidator<UsuarioRequest>
         RuleFor(x => x.Nome)
             .NotEmpty().WithMessage("Nome é obrigatório.")
             .MaximumLength(100).WithMessage("Nome deve ter no máximo 100 caracteres.");
-
-        RuleFor(x => x.RotaPreferencialId)
-            .NotEmpty().WithMessage("Rota preferencial é obrigatória.");
     }
 }
 

@@ -49,7 +49,7 @@ public class Veiculo : AggregateRoot
         if (!PodeAlocar(1))
             throw new DomainException($"Veículo {Ordem} não tem vagas disponíveis.");
 
-        var alocacao = new Alocacao(Id, passageiro.Id, isLider);
+        var alocacao = new Alocacao(Id, passageiro, isLider);
         _alocacoes.Add(alocacao);
         AtualizadoEm = DateTime.UtcNow;
     }

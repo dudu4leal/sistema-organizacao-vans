@@ -161,7 +161,8 @@ function abrirModal(tipo, data = null) {
 
     if (tipo === 'usuario') {
         title.textContent = data ? 'Editar Torcedor' : 'Novo Torcedor';
-        const rotasOpts = rotasCache.map(r => `<option value="${r.id}" ${data?.rotaPreferencialId === r.id ? 'selected' : ''}>${r.nome}</option>`).join('');
+        const rotaSelecionada = data?.rotaPreferencialId || '';
+        const rotasOpts = rotasCache.map(r => `<option value="${r.id}" ${rotaSelecionada === r.id ? 'selected' : ''}>${r.nome}</option>`).join('');
         const gruposOpts = gruposCache.map(g => `<option value="${g.id}" ${data?.grupoId === g.id ? 'selected' : ''}>${g.nome}</option>`).join('');
         body.innerHTML = `
             <form id="modal-form">
@@ -175,8 +176,8 @@ function abrirModal(tipo, data = null) {
                         <input type="text" id="f-telefone" value="${data?.telefone || ''}" placeholder="(21) 99999-9999">
                     </div>
                     <div class="form-group">
-                        <label for="f-rota">Rota preferencial *</label>
-                        <select id="f-rota" required><option value="">Selecione...</option>${rotasOpts}</select>
+                        <label for="f-rota">Rota preferencial</label>
+                        <select id="f-rota"><option value="">— Sem rota —</option>${rotasOpts}</select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -189,12 +190,17 @@ function abrirModal(tipo, data = null) {
                 <button class="btn btn-primary" onclick="salvarUsuario('${data?.id || ''}')">Salvar</button>
             </div>`;
     } else if (tipo === 'grupo') {
+        const rotasOpts = rotasCache.map(r => `<option value="${r.id}">${r.nome}</option>`).join('');
         title.textContent = 'Novo Grupo';
         body.innerHTML = `
             <form id="modal-form">
                 <div class="form-group">
                     <label for="f-grupo-nome">Nome do grupo *</label>
                     <input type="text" id="f-grupo-nome" placeholder="Ex: Amigos do Bairro" required>
+                </div>
+                <div class="form-group">
+                    <label for="f-grupo-rota">Rota *</label>
+                    <select id="f-grupo-rota" required><option value="">Selecione...</option>${rotasOpts}</select>
                 </div>
             </form>
             <div class="modal-footer">
@@ -255,14 +261,17 @@ async function salvarUsuario(id) {
     const rotaId = $('f-rota').value;
     const grupoId = $('f-grupo').value;
 
-    if (!nome || !rotaId) { toast('Preencha nome e rota!', 'warning'); return; }
+    if (!nome) { toast('Preencha o nome!', 'warning'); return; }
+
+    // rotaId vazio = null (sem rota preferencial)
+    const rotaPreferencialId = rotaId || null;
 
     try {
         if (id) {
-            await UsuarioApi.atualizar(id, { nome, telefone: telefone || null, rotaPreferencialId: rotaId, grupoId: grupoId || null });
+            await UsuarioApi.atualizar(id, { nome, telefone: telefone || null, rotaPreferencialId, grupoId: grupoId || null });
             toast('Torcedor atualizado!', 'success');
         } else {
-            await UsuarioApi.criar({ nome, telefone: telefone || null, rotaPreferencialId: rotaId, grupoId: grupoId || null });
+            await UsuarioApi.criar({ nome, telefone: telefone || null, rotaPreferencialId, grupoId: grupoId || null });
             toast('Torcedor cadastrado!', 'success');
         }
         fecharModal();
@@ -308,11 +317,14 @@ async function loadGrupos() {
         let html = '<div class="grupos-grid">';
         grupos.forEach(g => {
             const membros = usuarios.filter(u => u.grupoId === g.id);
+            const rota = rotasCache.find(r => r.id === g.rotaId);
             html += `
                 <div class="grupo-card" data-grupo-id="${g.id}">
                     <div class="grupo-card-header">
                         <h3>${g.nome}</h3>
+                        <span class="badge badge-black">${rota ? rota.nome : 'N/D'}</span>
                         <span class="badge badge-gray">${g.totalMembros}</span>
+                        <button class="btn btn-danger btn-sm" onclick="removerGrupo('${g.id}')" title="Excluir grupo" style="margin-left:auto">&#128465;</button>
                     </div>
                     <div class="grupo-card-body drop-zone" data-grupo-id="${g.id}">
                         ${membros.length === 0 ? '<div class="grupo-empty">Arraste usuários para cá</div>' :
@@ -418,11 +430,22 @@ async function removerMembroGrupo(grupoId, usuarioId) {
 
 async function salvarGrupo() {
     const nome = $('f-grupo-nome').value.trim();
+    const rotaId = $('f-grupo-rota').value;
     if (!nome) { toast('Informe o nome do grupo!', 'warning'); return; }
+    if (!rotaId) { toast('Selecione a rota do grupo!', 'warning'); return; }
     try {
-        await GrupoApi.criar({ nome });
+        await GrupoApi.criar({ nome, rotaId });
         toast('Grupo criado!', 'success');
         fecharModal();
+        loadGrupos();
+    } catch (err) { toast(`Erro: ${err.message}`, 'error'); }
+}
+
+async function removerGrupo(id) {
+    if (!confirm('Remover este grupo? Os torcedores serão movidos para avulsos.')) return;
+    try {
+        await GrupoApi.remover(id);
+        toast('Grupo removido', 'info');
         loadGrupos();
     } catch (err) { toast(`Erro: ${err.message}`, 'error'); }
 }
@@ -449,6 +472,7 @@ async function loadRotas() {
                 <td><strong>${r.nome}</strong></td>
                 <td>${r.localEmbarque}</td>
                 <td class="actions-cell">
+                    <button class="btn btn-secondary btn-sm" onclick="editarRota('${r.id}')">&#9998;</button>
                     <button class="btn btn-danger btn-sm" onclick="removerRota('${r.id}')">&#128465;</button>
                 </td>
             </tr>`;
@@ -460,13 +484,26 @@ async function loadRotas() {
     }
 }
 
+async function editarRota(id) {
+    try {
+        const r = await RotaApi.obter(id);
+        if (r) abrirModal('rota', r);
+    } catch (err) { toast(`Erro: ${err.message}`, 'error'); }
+}
+
 async function salvarRota(id) {
     const nome = $('f-rota-nome').value.trim();
     const local = $('f-rota-local').value.trim();
     if (!nome || !local) { toast('Preencha todos os campos!', 'warning'); return; }
     try {
-        await RotaApi.criar({ nome, localEmbarque: local });
-        toast('Rota criada!', 'success');
+        if (id) {
+            // Para edição, precisaríamos de um endpoint PUT, que não existe ainda.
+            // Por enquanto, apenas notificamos que a funcionalidade está planejada.
+            toast('Edição de rota será implementada em breve.', 'info');
+        } else {
+            await RotaApi.criar({ nome, localEmbarque: local });
+            toast('Rota criada!', 'success');
+        }
         fecharModal();
         loadRotas();
     } catch (err) { toast(`Erro: ${err.message}`, 'error'); }
@@ -623,7 +660,7 @@ async function alocarJogo(jogoId) {
 
 async function verAlocacao(jogoId) {
     try {
-        const resultado = await JogoApi.alocar(jogoId);
+        const resultado = await JogoApi.obterAlocacao(jogoId);
         exibirResultado(resultado);
     } catch (err) { toast(`Erro: ${err.message}`, 'error'); }
 }
@@ -650,12 +687,13 @@ function exibirResultado(r) {
     if (r.veiculos?.length > 0) {
         html += '<div class="veiculos-grid">';
         r.veiculos.forEach(v => {
-            const tipoClass = v.classificacao === 0 ? 'van' : v.classificacao === 1 ? 'doblo' : 'espera';
-            const tipoBadge = v.classificacao === 0 ? 'Van' : v.classificacao === 1 ? 'Doblo/Spin' : 'Lista de Espera';
+            const tipoClass = v.classificacao === 1 ? 'van' : v.classificacao === 2 ? 'doblo' : 'espera';
+            const tipoBadge = v.classificacao === 1 ? 'Van' : v.classificacao === 2 ? 'Doblo/Spin' : 'Lista de Espera';
+            const nomeRota = v.rotaNome ? ` — ${v.rotaNome}` : '';
             html += `
                 <div class="veiculo-card tipo-${tipoClass}">
                     <div class="veiculo-header">
-                        <span class="veiculo-nome">${v.tipoDescricao || `Veículo ${v.ordem + 1}`}</span>
+                        <span class="veiculo-nome">${v.tipoDescricao || `Veículo ${v.ordem + 1}`}${nomeRota}</span>
                         <span class="veiculo-tipo ${tipoClass}">${tipoBadge}</span>
                     </div>
                     <div class="veiculo-lotacao">${v.lotacao} vagas &bull; ${v.vagasRestantes} livres</div>
@@ -690,13 +728,14 @@ function exibirResultado(r) {
 
 async function copiarWhatsApp(jogoId) {
     try {
-        const resultado = await JogoApi.alocar(jogoId);
+        const resultado = await JogoApi.obterAlocacao(jogoId);
         let texto = `*🚐 CARONA ALVINEGRA*\n*${resultado.jogoDescricao || 'Jogo'}*\n\n`;
 
         if (resultado.veiculos) {
             resultado.veiculos.forEach(v => {
-                const tipo = v.classificacao === 0 ? '🚐 Van' : v.classificacao === 1 ? '🚗 Doblo/Spin' : '⏳ Espera';
-                texto += `*${tipo}* (${v.lotacao} vagas)\n`;
+                const tipo = v.classificacao === 1 ? '🚐 Van' : v.classificacao === 2 ? '🚗 Doblo/Spin' : '⏳ Espera';
+                const rotaTexto = v.rotaNome ? ` — ${v.rotaNome}` : '';
+                texto += `*${tipo}${rotaTexto}* (${v.lotacao} vagas)\n`;
                 v.passageiros.forEach(p => {
                     const lider = p.isLider ? ' 👑' : '';
                     texto += `  ${p.numero}. ${p.nome}${lider}\n`;

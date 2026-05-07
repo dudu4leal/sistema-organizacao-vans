@@ -21,6 +21,7 @@ public class VeiculoDto
     public int Ordem { get; init; }
     public ETipoVeiculo Classificacao { get; init; }
     public string TipoDescricao { get; init; } = string.Empty;
+    public string? RotaNome { get; init; }
     public int Lotacao { get; init; }
     public int VagasRestantes { get; init; }
     public List<PassageiroDto> Passageiros { get; init; } = [];

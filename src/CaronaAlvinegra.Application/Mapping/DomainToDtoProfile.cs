@@ -16,6 +16,7 @@ public class DomainToDtoProfile : Profile
 
         // Grupo
         CreateMap<Grupo, GrupoResponse>()
+            .ForMember(d => d.RotaNome, o => o.MapFrom(s => s.Rota != null ? s.Rota.Nome : null))
             .ForMember(d => d.TotalMembros, o => o.Ignore()); // Calculado no service
 
         // Rota

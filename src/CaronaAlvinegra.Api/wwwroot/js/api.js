@@ -2,7 +2,10 @@
    API CLIENT — Carona Alvinegra
    ══════════════════════════════════════════════ */
 
-const API_BASE = '';
+// API_BASE pode ser sobrescrita via variável global (ex: __API_BASE__)
+// ou via window.env.API_BASE para configuração cross-origin no Desktop app.
+const API_BASE = (typeof __API_BASE__ !== 'undefined' ? __API_BASE__ :
+                  (window.env && window.env.API_BASE ? window.env.API_BASE : ''));
 
 async function apiRequest(method, path, body = null) {
     const options = {
@@ -46,6 +49,7 @@ const GrupoApi = {
 // ── Rotas ──
 const RotaApi = {
     listar: () => apiRequest('GET', '/api/rotas'),
+    obter: (id) => apiRequest('GET', `/api/rotas/${id}`),
     criar: (data) => apiRequest('POST', '/api/rotas', data),
     remover: (id) => apiRequest('DELETE', `/api/rotas/${id}`),
 };
@@ -56,6 +60,7 @@ const JogoApi = {
     criar: (data) => apiRequest('POST', '/api/jogos', data),
     obter: (id) => apiRequest('GET', `/api/jogos/${id}`),
     alocar: (id) => apiRequest('POST', `/api/jogos/${id}/alocar`),
+    obterAlocacao: (id) => apiRequest('GET', `/api/jogos/${id}/alocar`),
     remover: (id) => apiRequest('DELETE', `/api/jogos/${id}`),
 };
 

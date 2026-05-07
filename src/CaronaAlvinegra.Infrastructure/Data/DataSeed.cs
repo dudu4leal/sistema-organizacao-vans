@@ -20,15 +20,15 @@ public static class DataSeed
         await context.SaveChangesAsync();
 
         // ── Grupos ────────────────────────────────────
-        var grupoAmigos = new Grupo("Amigos do Bairro");
-        var grupoFamilia = new Grupo("Família Souza");
-        var grupoTrabalho = new Grupo("Colegas de Trabalho");
+        var grupoAmigos = new Grupo("Amigos do Bairro", rotaCascatinha.Id);
+        var grupoFamilia = new Grupo("Família Souza", rotaMosela.Id);
+        var grupoTrabalho = new Grupo("Colegas de Trabalho", rotaCentro.Id);
 
         context.Grupos.AddRange(grupoAmigos, grupoFamilia, grupoTrabalho);
         await context.SaveChangesAsync();
 
         // ── Usuários ──────────────────────────────────
-        // Construtor: Usuario(nome, rotaPreferencialId, telefone?, grupoId?)
+        // Construtor: Usuario(nome, rotaPreferencialId?, telefone?, grupoId?)
         var usuarios = new List<Usuario>
         {
             new Usuario("Carlos Silva",     rotaCascatinha.Id,   "11999990001", grupoAmigos.Id),
@@ -41,7 +41,18 @@ public static class DataSeed
             new Usuario("Rafael Costa",     rotaCentro.Id,       "11999990008", grupoTrabalho.Id),
             new Usuario("Fernanda Lima",    rotaQuitandinha.Id,  "11999990009"),
             new Usuario("Roberto Alves",    rotaQuitandinha.Id,  "11999990010"),
+            new Usuario("Paulo Oliveira",   null,                "11999990011"), // Sem rota preferencial
+            new Usuario("Marina Dias",      null,                "11999990012"), // Sem rota preferencial
         };
+
+        // Vincular membros aos grupos (popula a coleção _membros em memória)
+        var gruposList = new[] { grupoAmigos, grupoFamilia, grupoTrabalho };
+        foreach (var usuario in usuarios.Where(u => u.GrupoId.HasValue))
+        {
+            var grupo = gruposList.FirstOrDefault(g => g.Id == usuario.GrupoId.Value);
+            if (grupo is not null)
+                grupo.AdicionarMembro(usuario);
+        }
 
         context.Usuarios.AddRange(usuarios);
         await context.SaveChangesAsync();

@@ -3,17 +3,20 @@ namespace CaronaAlvinegra.Domain.Entities;
 public class Grupo : AggregateRoot
 {
     public string Nome { get; private set; } = string.Empty;
+    public Guid RotaId { get; private set; }
 
-    // Navigation property
+    // Navigation properties
+    public Rota? Rota { get; private set; }
     private readonly List<Usuario> _membros = new();
     public IReadOnlyCollection<Usuario> Membros => _membros.AsReadOnly();
 
     // EF Core
     private Grupo() { }
 
-    public Grupo(string nome)
+    public Grupo(string nome, Guid rotaId)
     {
         Nome = nome;
+        RotaId = rotaId;
     }
 
     public void AdicionarMembro(Usuario usuario)

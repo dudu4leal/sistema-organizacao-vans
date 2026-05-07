@@ -33,10 +33,7 @@ public class AppDbContext : DbContext
                   .HasForeignKey(e => e.RotaPreferencialId)
                   .OnDelete(DeleteBehavior.NoAction);
 
-            entity.HasOne(e => e.Grupo)
-                  .WithMany(g => g.Membros)
-                  .HasForeignKey(e => e.GrupoId)
-                  .OnDelete(DeleteBehavior.SetNull);
+            // Relacionamento com Grupo configurado na entidade Grupo (HasMany)
         });
 
         // ── Grupo ─────────────────────────────────────
@@ -46,8 +43,17 @@ public class AppDbContext : DbContext
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Nome).IsRequired().HasMaxLength(100);
 
-            // Membros é uma collection navigation gerenciada separadamente
-            entity.Ignore(e => e.Membros);
+            entity.HasOne(g => g.Rota)
+                  .WithMany()
+                  .HasForeignKey(g => g.RotaId)
+                  .OnDelete(DeleteBehavior.NoAction);
+
+            // Membros é populado via navigation property de Usuario.Grupo
+            // EF Core usa o backing field _membros para a IReadOnlyCollection
+            entity.HasMany(g => g.Membros)
+                  .WithOne(u => u.Grupo)
+                  .HasForeignKey(u => u.GrupoId)
+                  .OnDelete(DeleteBehavior.SetNull);
         });
 
         // ── Rota ──────────────────────────────────────
@@ -128,7 +134,7 @@ public class AppDbContext : DbContext
                   .HasForeignKey(e => e.RotaId)
                   .OnDelete(DeleteBehavior.NoAction);
 
-            entity.Ignore(e => e.Alocacoes);
+            // LotacaoAtual e VagasRestantes são propriedades calculadas (apenas leitura)
             entity.Ignore(e => e.LotacaoAtual);
             entity.Ignore(e => e.VagasRestantes);
         });
@@ -145,7 +151,7 @@ public class AppDbContext : DbContext
                   .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(e => e.Veiculo)
-                  .WithMany()
+                  .WithMany(v => v.Alocacoes)
                   .HasForeignKey(e => e.VeiculoId)
                   .OnDelete(DeleteBehavior.Cascade);
 

@@ -4,7 +4,7 @@ public class Usuario : AggregateRoot
 {
     public string Nome { get; private set; } = string.Empty;
     public string? Telefone { get; private set; }
-    public Guid RotaPreferencialId { get; private set; }
+    public Guid? RotaPreferencialId { get; private set; }
     public Guid? GrupoId { get; private set; }
 
     // Navigation properties (EF Core)
@@ -14,7 +14,7 @@ public class Usuario : AggregateRoot
     // EF Core
     private Usuario() { }
 
-    public Usuario(string nome, Guid rotaPreferencialId, string? telefone = null, Guid? grupoId = null)
+    public Usuario(string nome, Guid? rotaPreferencialId, string? telefone = null, Guid? grupoId = null)
     {
         Nome = nome;
         Telefone = telefone;
@@ -22,7 +22,22 @@ public class Usuario : AggregateRoot
         GrupoId = grupoId;
     }
 
-    public void AlterarRotaPreferencial(Guid novaRotaId)
+    public void AlterarNome(string nome)
+    {
+        if (string.IsNullOrWhiteSpace(nome))
+            throw new DomainException("Nome do usuário não pode ser vazio.");
+
+        Nome = nome;
+        AtualizadoEm = DateTime.UtcNow;
+    }
+
+    public void AlterarTelefone(string? telefone)
+    {
+        Telefone = telefone;
+        AtualizadoEm = DateTime.UtcNow;
+    }
+
+    public void AlterarRotaPreferencial(Guid? novaRotaId)
     {
         RotaPreferencialId = novaRotaId;
         AtualizadoEm = DateTime.UtcNow;
@@ -31,6 +46,12 @@ public class Usuario : AggregateRoot
     public void VincularAoGrupo(Grupo grupo)
     {
         GrupoId = grupo.Id;
+        AtualizadoEm = DateTime.UtcNow;
+    }
+
+    public void DesvincularDoGrupo()
+    {
+        GrupoId = null;
         AtualizadoEm = DateTime.UtcNow;
     }
 }

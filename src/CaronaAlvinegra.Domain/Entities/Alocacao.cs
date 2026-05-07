@@ -23,6 +23,18 @@ public class Alocacao : AggregateRoot
         IsLider = isLider;
     }
 
+    /// <summary>
+    /// Construtor usado pelo algoritmo de alocação em memória.
+    /// Mantém a referência do Passageiro para navegação sem banco.
+    /// </summary>
+    public Alocacao(Guid veiculoId, Passageiro passageiro, bool isLider = false)
+    {
+        VeiculoId = veiculoId;
+        PassageiroId = passageiro.Id;
+        Passageiro = passageiro;
+        IsLider = isLider;
+    }
+
     public void DefinirComoLider()
     {
         IsLider = true;

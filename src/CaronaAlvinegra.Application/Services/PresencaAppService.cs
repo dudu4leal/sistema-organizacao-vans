@@ -68,15 +68,26 @@ public class PresencaAppService
 
     /// <summary>
     /// Remove a presença de um usuário em um jogo.
+    /// Remove o Passageiro associado e a Presenca original.
     /// </summary>
     public async Task<bool> RemoverPresencaAsync(Guid presencaId, CancellationToken ct = default)
     {
+        // Busca o Passageiro cujo PresencaId corresponde ao id recebido
         var passageiros = await _passageiroRepo.FindAsync(p => p.PresencaId == presencaId, ct);
         var passageiro = passageiros.FirstOrDefault();
 
         if (passageiro is null) return false;
 
+        // Remove o Passageiro primeiro (evita FK violation)
         _passageiroRepo.Remove(passageiro);
+
+        // Agora remove a Presenca original
+        var presenca = await _presencaRepo.GetByIdAsync(presencaId, ct);
+        if (presenca is not null)
+        {
+            _presencaRepo.Remove(presenca);
+        }
+
         await _uow.CommitAsync(ct);
         return true;
     }
@@ -85,15 +96,26 @@ public class PresencaAppService
         Guid jogoId, CancellationToken ct = default)
     {
         var passageiros = await _passageiroRepo.GetPassageirosPorJogoAsync(jogoId, ct);
-        // Simplified mapping - in production, join with Presenca table
-        return passageiros.Select(p => new PresencaResponse
+        var passageirosList = passageiros.ToList();
+
+        // Carregar as presenças reais para obter o ConfirmadoEm original
+        var presencaIds = passageirosList.Select(p => p.PresencaId).Distinct();
+        var presencasDict = (await _presencaRepo.FindAsync(
+                p => presencaIds.Contains(p.Id), ct))
+            .ToDictionary(p => p.Id, p => p.ConfirmadoEm);
+
+        // Retorna o PresencaId real (p.PresencaId) como Id, pois é ele que usamos
+        // para remover a presença. O p.Id é o Id do Passageiro, não da Presenca.
+        return passageirosList.Select(p => new PresencaResponse
         {
-            Id = p.Id,
+            Id = p.PresencaId,
             UsuarioId = p.UsuarioId,
             UsuarioNome = p.Nome,
             JogoId = p.JogoId,
             RotaEfetivaId = p.RotaId,
-            ConfirmadoEm = DateTime.UtcNow
+            ConfirmadoEm = presencasDict.TryGetValue(p.PresencaId, out var confirmadoEm)
+                ? confirmadoEm
+                : DateTime.UtcNow
         });
     }
 }

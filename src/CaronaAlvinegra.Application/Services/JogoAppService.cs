@@ -121,6 +121,7 @@ public class JogoAppService
         var resultado = _alocador.Executar(presencasList, grupos, rotas);
 
         // Mapear resultado para DTO
+        var rotasDict = rotas.ToDictionary(r => r.Id, r => r.Nome);
         var veiculosDto = resultado.Veiculos.Select(v =>
         {
             int passageiroNum = 1;
@@ -140,6 +141,7 @@ public class JogoAppService
                 Ordem = v.Ordem,
                 Classificacao = v.Classificacao,
                 TipoDescricao = ObterDescricaoTipo(v.Classificacao),
+                RotaNome = rotasDict.TryGetValue(v.RotaId, out var nomeRota) ? nomeRota : null,
                 Lotacao = v.LotacaoAtual,
                 VagasRestantes = v.VagasRestantes,
                 Passageiros = passageiros

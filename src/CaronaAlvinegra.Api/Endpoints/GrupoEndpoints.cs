@@ -41,6 +41,14 @@ public static class GrupoEndpoints
         .WithName("AdicionarMembro")
         .WithOpenApi();
 
+        group.MapDelete("/{grupoId:guid}/membros/{usuarioId:guid}", async (Guid grupoId, Guid usuarioId, GrupoAppService service, CancellationToken ct) =>
+        {
+            var result = await service.RemoverMembroAsync(usuarioId, ct);
+            return result ? Results.NoContent() : Results.NotFound();
+        })
+        .WithName("RemoverMembro")
+        .WithOpenApi();
+
         group.MapDelete("/{id:guid}", async (Guid id, GrupoAppService service, CancellationToken ct) =>
         {
             var result = await service.RemoverAsync(id, ct);

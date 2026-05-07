@@ -49,5 +49,16 @@ public static class JogoEndpoints
         })
         .WithName("AlocarJogo")
         .WithOpenApi();
+
+        // Endpoint GET para consultar o resultado da alocação (sem re-executar)
+        // Como a alocação é calculada em memória, ela é recalculada, mas semanticamente
+        // é uma operação de leitura (GET), adequada para "Ver Resultado"
+        group.MapGet("/{id:guid}/alocar", async (Guid id, JogoAppService service, CancellationToken ct) =>
+        {
+            var result = await service.AlocarJogoAsync(id, ct);
+            return result.Sucesso ? Results.Ok(result) : Results.BadRequest(result);
+        })
+        .WithName("ObterAlocacao")
+        .WithOpenApi();
     }
 }

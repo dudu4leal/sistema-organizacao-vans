@@ -51,7 +51,10 @@ builder.Services.AddScoped<IPresencaRepository, PresencaRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // AutoMapper
-builder.Services.AddAutoMapper(typeof(DomainToDtoProfile));
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<DomainToDtoProfile>();
+});
 
 // FluentValidation
 builder.Services.AddValidatorsFromAssemblyContaining<UsuarioValidator>();
@@ -101,7 +104,7 @@ if (app.Environment.IsDevelopment())
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    await context.Database.EnsureCreatedAsync();
+    await context.Database.MigrateAsync();
     await DataSeed.SeedAsync(context);
 }
 
