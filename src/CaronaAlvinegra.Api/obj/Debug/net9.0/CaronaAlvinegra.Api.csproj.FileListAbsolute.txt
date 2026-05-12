@@ -92,7 +92,6 @@ C:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api
 C:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\obj\Debug\net9.0\ref\CaronaAlvinegra.Api.dll
 c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\bin\Debug\net9.0\CaronaAlvinegra.Api.staticwebassets.runtime.json
 c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\obj\Debug\net9.0\CaronaAlvinegra.Api.sourcelink.json
-C:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\obj\Debug\net9.0\compressed\w6j8xsmkyc-12otuwd3it.gz
 c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\obj\Debug\net9.0\compressed\fwq74naj4j-gmqxajz4om.gz
 c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\bin\Debug\net9.0\Humanizer.dll
 c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
@@ -181,5 +180,6 @@ c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api
 c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
 c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
 c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\bin\Debug\net9.0\System.Diagnostics.DiagnosticSource.dll
-c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\obj\Debug\net9.0\compressed\sndeml2fee-fiubz1ydpl.gz
-c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\obj\Debug\net9.0\compressed\b4lbt22jrc-3ae6u4wkhn.gz
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\obj\Debug\net9.0\compressed\w6j8xsmkyc-l1r08mat3v.gz
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\obj\Debug\net9.0\compressed\sndeml2fee-2wwdd9esq0.gz
+c:\Users\dudsl\Documents\GitHub\sistema-organizacao-vans\src\CaronaAlvinegra.Api\obj\Debug\net9.0\compressed\b4lbt22jrc-6krl9jakek.gz

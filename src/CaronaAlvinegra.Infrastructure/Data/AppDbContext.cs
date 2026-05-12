@@ -73,6 +73,9 @@ public class AppDbContext : DbContext
             entity.Property(e => e.Adversario).IsRequired().HasMaxLength(100);
             entity.Property(e => e.Local).IsRequired().HasMaxLength(200);
             entity.Property(e => e.Data).IsRequired();
+            entity.Property(e => e.LiderOverridesJson)
+                  .HasColumnName("LiderOverrides")
+                  .IsRequired(false);
         });
 
         // ── Presenca ──────────────────────────────────
@@ -94,7 +97,7 @@ public class AppDbContext : DbContext
             entity.HasOne(e => e.RotaEfetiva)
                   .WithMany()
                   .HasForeignKey(e => e.RotaEfetivaId)
-                  .OnDelete(DeleteBehavior.NoAction);
+                  .OnDelete(DeleteBehavior.SetNull);
 
             entity.HasIndex(e => new { e.UsuarioId, e.JogoId }).IsUnique();
         });
@@ -116,7 +119,7 @@ public class AppDbContext : DbContext
             entity.HasOne(e => e.Rota)
                   .WithMany()
                   .HasForeignKey(e => e.RotaId)
-                  .OnDelete(DeleteBehavior.NoAction);
+                  .OnDelete(DeleteBehavior.SetNull);
         });
 
         // ── Veiculo ──────────────────────────────────

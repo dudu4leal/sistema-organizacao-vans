@@ -31,6 +31,7 @@ public class PassageiroDto
 {
     public int Numero { get; init; }
     public string Nome { get; init; } = string.Empty;
-    public bool IsLider { get; init; }
+    public bool IsLider { get; set; }
     public string? Telefone { get; init; }
+    public Guid UsuarioId { get; init; }
 }

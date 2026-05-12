@@ -37,6 +37,11 @@ public class AlocadorService
 
     /// <summary>
     /// Executa o algoritmo completo de alocação para um conjunto de passageiros e grupos.
+    ///
+    /// Fases:
+    /// 1. Alocação primária por rota (passageiros COM rota definida)
+    /// 2. Distribuição de passageiros SEM rota nas vans existentes (mais espaço disponível)
+    /// 3. Consolidação e classificação dos veículos
     /// </summary>
     /// <param name="passageiros">Lista de passageiros do jogo</param>
     /// <param name="grupos">Lista de grupos cadastrados</param>
@@ -57,10 +62,28 @@ public class AlocadorService
             return resultado;
         }
 
-        // Etapa 3: Separar por rota
+        // Separa passageiros com e sem rota definida
+        var passageirosComRota = passageiros
+            .Where(p => p.RotaId.HasValue)
+            .ToList();
+
+        var passageirosSemRota = passageiros
+            .Where(p => !p.RotaId.HasValue)
+            .ToList();
+
+        // ────────────────────────────────────────────────────────────
+        //  ETAPA 3: Alocar passageiros COM rota (separados por rota)
+        // ────────────────────────────────────────────────────────────
+        // Coleta TODOS os veículos de todas as rotas SEM classificar ainda,
+        // para que passageiros sem rota possam ser distribuídos antes da
+        // classificação, ajudando a encher veículos que seriam dissolvidos.
+        // ────────────────────────────────────────────────────────────
+
+        var todosVeiculos = new List<Veiculo>();
+
         foreach (var rota in rotas)
         {
-            var passageirosDaRota = passageiros
+            var passageirosDaRota = passageirosComRota
                 .Where(p => p.RotaId == rota.Id)
                 .ToList();
 
@@ -68,27 +91,102 @@ public class AlocadorService
                 continue;
 
             var veiculosDaRota = AlocarRota(passageirosDaRota, grupos, rota.Id);
+            todosVeiculos.AddRange(veiculosDaRota);
+        }
 
-            // Fase 3: Classificar veículos
-            foreach (var veiculo in veiculosDaRota)
+        // ────────────────────────────────────────────────────────────
+        //  ETAPA 4: Distribuir passageiros SEM rota
+        // ────────────────────────────────────────────────────────────
+        // Distribui nos veículos existentes (reabrindo-os se necessário)
+        // ou cria novos veículos se não houver nenhum.
+        // ────────────────────────────────────────────────────────────
+
+        if (passageirosSemRota.Count > 0)
+        {
+            if (todosVeiculos.Count == 0)
             {
-                var classificacao = veiculo.Classificar();
+                // Nenhum veículo existe ainda — cria um novo para cada lote
+                int ordem = 1;
+                var veiculo = new Veiculo(Guid.Empty, ordem);
 
-                if (classificacao == ETipoVeiculo.ListaEspera)
+                foreach (var passageiro in passageirosSemRota)
                 {
-                    // Dissolve o veículo: passageiros vão para lista de espera
-                    var passageirosDoVeiculo = veiculo.Alocacoes
-                        .Select(a => a.Passageiro)
-                        .Where(p => p != null)
-                        .Cast<Passageiro>()
-                        .ToList();
+                    if (veiculo.PodeAlocar(1))
+                    {
+                        veiculo.AlocarPassageiro(passageiro, isLider: veiculo.LotacaoAtual == 0);
+                    }
+                    else
+                    {
+                        veiculo.Fechar();
+                        todosVeiculos.Add(veiculo);
 
-                    resultado.ListaEspera.AddRange(passageirosDoVeiculo);
+                        ordem++;
+                        veiculo = new Veiculo(Guid.Empty, ordem);
+                        veiculo.AlocarPassageiro(passageiro, isLider: true);
+                    }
                 }
-                else
+
+                if (veiculo.LotacaoAtual > 0)
                 {
-                    resultado.Veiculos.Add(veiculo);
+                    veiculo.Fechar();
+                    todosVeiculos.Add(veiculo);
                 }
+            }
+            else
+            {
+                // Distribui nos veículos existentes, priorizando os com mais vagas
+                foreach (var passageiro in passageirosSemRota)
+                {
+                    var veiculo = todosVeiculos
+                        .Where(v => v.VagasRestantes > 0)
+                        .OrderByDescending(v => v.VagasRestantes)
+                        .FirstOrDefault();
+
+                    if (veiculo is not null)
+                    {
+                        // Reabre o veículo para permitir alocação (foi fechado
+                        // durante a alocação primária em AlocarRota)
+                        veiculo.Reabrir();
+                        veiculo.AlocarPassageiro(passageiro);
+                    }
+                    else
+                    {
+                        // Todos os veículos estão cheios — cria um novo
+                        var novoVeiculo = new Veiculo(Guid.Empty, todosVeiculos.Count + 1);
+                        novoVeiculo.AlocarPassageiro(passageiro, isLider: true);
+                        todosVeiculos.Add(novoVeiculo);
+                    }
+                }
+            }
+        }
+
+        // ────────────────────────────────────────────────────────────
+        //  ETAPA 5: Classificar TODOS os veículos
+        // ────────────────────────────────────────────────────────────
+        // Agora sim classifica. Passageiros sem rota já foram distribuídos,
+        // então veículos que antes seriam dissolvidos podem ter subido de
+        // categoria (ex: 4 rota + 1 sem rota = 5 → DobloSpin).
+        // ────────────────────────────────────────────────────────────
+
+        foreach (var veiculo in todosVeiculos)
+        {
+            var classificacao = veiculo.Classificar();
+
+            if (classificacao == ETipoVeiculo.ListaEspera)
+            {
+                // Dissolve o veículo: passageiros vão para lista de espera
+                var passageirosDoVeiculo = veiculo.Alocacoes
+                    .Select(a => a.Passageiro)
+                    .Where(p => p != null)
+                    .Cast<Passageiro>()
+                    .ToList();
+
+                resultado.ListaEspera.AddRange(passageirosDoVeiculo);
+            }
+            else
+            {
+                veiculo.Fechar();
+                resultado.Veiculos.Add(veiculo);
             }
         }
 
@@ -142,7 +240,9 @@ public class AlocadorService
 
                 if (veiculoAtual.PodeAlocar(1))
                 {
-                    veiculoAtual.AlocarPassageiro(passageiro);
+                    // Se o veículo está vazio, este avulso será o líder (o Veiculo.AlocarPassageiro
+                    // já garante que apenas o primeiro líder seja registrado)
+                    veiculoAtual.AlocarPassageiro(passageiro, isLider: veiculoAtual.LotacaoAtual == 0);
                 }
                 else
                 {
@@ -151,7 +251,7 @@ public class AlocadorService
 
                     ordem++;
                     veiculoAtual = new Veiculo(rotaId, ordem);
-                    veiculoAtual.AlocarPassageiro(passageiro);
+                    veiculoAtual.AlocarPassageiro(passageiro, isLider: true);
                 }
             }
         }
@@ -186,12 +286,16 @@ public class AlocadorService
         {
             var vanAtual = veiculos[i];
 
-            // Se já tem >= 11 ou tem 5-7 (vai ser DobloSpin), está ok
-            if (vanAtual.LotacaoAtual >= Veiculo.LotacaoMinimaVan ||
-                vanAtual.LotacaoAtual >= Veiculo.LotacaoMinimaDobloSpin)
+            // Van (>= 11) — já está ok
+            if (vanAtual.LotacaoAtual >= Veiculo.LotacaoMinimaVan)
                 continue;
 
-            // Tem menos de 5 - precisa preencher
+            // Doblo/Spin (5 a 7) ou Van pequena (8 a 10) — ambos serão
+            // classificados corretamente na Fase 3, não precisa consolidar
+            if (vanAtual.LotacaoAtual >= Veiculo.ClassificacaoMinimaDobloSpin)
+                continue;
+
+            // Abaixo de 5 — precisa ser preenchido ou redistribuído
             PreencherVeiculo(vanAtual, veiculos, i + 1, grupos);
         }
     }
@@ -262,8 +366,43 @@ public class AlocadorService
             }
         }
 
-        // Se ainda tem deficit e o veículo tem < 5 pessoas,
-        // ele será classificado como ListaEspera na Fase 3
+        // Se ainda há deficit e o veículo NÃO se encaixa como Doblo/Spin (5-7),
+        // precisamos redistribuir seus passageiros para outros veículos da mesma rota.
+        int lotacaoFinal = veiculo.LotacaoAtual;
+        bool isDobloSpin = lotacaoFinal >= Veiculo.ClassificacaoMinimaDobloSpin &&
+                           lotacaoFinal <= Veiculo.ClassificacaoMaximaDobloSpin;
+
+        if (!isDobloSpin && deficit > 0)
+        {
+            // Redistribuir passageiros deste veículo para veículos posteriores
+            var passageirosParaRedistribuir = veiculo.Alocacoes
+                .Select(a => a.Passageiro)
+                .Where(p => p != null)
+                .Cast<Passageiro>()
+                .ToList();
+
+            foreach (var passageiro in passageirosParaRedistribuir)
+            {
+                veiculo.RemoverAlocacao(passageiro.Id);
+
+                // Encontrar veículo posterior com vaga
+                var veiculoDestino = todosVeiculos
+                    .Skip(inicio)
+                    .Where(v => v.PodeAlocar(1))
+                    .OrderByDescending(v => v.VagasRestantes)
+                    .FirstOrDefault();
+
+                if (veiculoDestino is not null)
+                {
+                    veiculoDestino.AlocarPassageiro(passageiro);
+                }
+                // Se não houver veículo com vaga, o passageiro ficará
+                // no veículo original e será tratado na Fase 3 (ListaEspera)
+            }
+
+            // Se todos os passageiros foram redistribuídos, a Fase 3 (Classificar())
+            // tratará este veículo vazio como ListaEspera automaticamente.
+        }
     }
 
     // ──────────────────────────────────────────────
@@ -326,9 +465,14 @@ public class AlocadorService
 
     private void AlocarGrupo(Veiculo veiculo, List<Passageiro> membros)
     {
+        // Apenas o primeiro grupo alocado em um veículo vazio pode definir um líder.
+        // Se o veículo já tem passageiros, nenhum membro deste grupo será líder,
+        // garantindo que cada veículo tenha no máximo UM líder.
+        bool podeTerLider = veiculo.LotacaoAtual == 0;
+
         for (int i = 0; i < membros.Count; i++)
         {
-            veiculo.AlocarPassageiro(membros[i], isLider: i == 0);
+            veiculo.AlocarPassageiro(membros[i], isLider: podeTerLider && i == 0);
         }
     }
 

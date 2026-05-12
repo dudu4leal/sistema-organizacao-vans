@@ -20,19 +20,13 @@ public class ValidadorDeIntegridade
     {
         _erros.Clear();
 
-        ValidarPassageirosSemRota(passageiros);
+        // Passageiros sem rota (RotaId == Guid.Empty) não são mais considerados erro.
+        // Eles serão distribuídos pelo AlocadorService na van mais conveniente
+        // durante a fase de alocação de passageiros sem rota definida.
+
         ValidarGruposVazios(grupos);
         ValidarGruposExcedemCapacidade(passageiros, grupos);
         ValidarConsistenciaRotaNosGrupos(passageiros, grupos);
-    }
-
-    private void ValidarPassageirosSemRota(List<Passageiro> passageiros)
-    {
-        var semRota = passageiros.Where(p => p.RotaId == Guid.Empty).ToList();
-        foreach (var p in semRota)
-        {
-            _erros.Add($"Passageiro '{p.Nome}' não possui rota definida.");
-        }
     }
 
     private void ValidarGruposVazios(List<Grupo> grupos)
@@ -75,7 +69,11 @@ public class ValidadorDeIntegridade
             if (membrosPresentes.Count < 2)
                 continue;
 
-            var rotas = membrosPresentes.Select(p => p.RotaId).Distinct().ToList();
+            var rotas = membrosPresentes
+                .Select(p => p.RotaId)
+                .Where(r => r.HasValue)
+                .Distinct()
+                .ToList();
             if (rotas.Count > 1)
             {
                 var nomes = string.Join(", ", membrosPresentes.Select(p => p.Nome));

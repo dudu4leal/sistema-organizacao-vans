@@ -39,4 +39,9 @@ public class Alocacao : AggregateRoot
     {
         IsLider = true;
     }
+
+    public void RemoverLideranca()
+    {
+        IsLider = false;
+    }
 }

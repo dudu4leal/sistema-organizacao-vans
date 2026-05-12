@@ -100,11 +100,11 @@ public class JogoAppService
                 Sucesso = false
             };
 
-        // Buscar presenças do jogo
-        var presencas = await _passageiroRepo.FindAsync(p => p.JogoId == jogoId, ct);
-        var presencasList = presencas.ToList();
+        // Buscar passageiros do jogo (presenças confirmadas)
+        var passageiros = await _passageiroRepo.FindAsync(p => p.JogoId == jogoId, ct);
+        var passageirosList = passageiros.ToList();
 
-        if (!presencasList.Any())
+        if (!passageirosList.Any())
             return new ResultadoAlocacaoDto
             {
                 JogoId = jogoId,
@@ -118,7 +118,7 @@ public class JogoAppService
         var rotas = (await _rotaRepo.GetAllAsync(ct)).ToList();
 
         // Executar algoritmo de alocação
-        var resultado = _alocador.Executar(presencasList, grupos, rotas);
+        var resultado = _alocador.Executar(passageirosList, grupos, rotas);
 
         // Mapear resultado para DTO
         var rotasDict = rotas.ToDictionary(r => r.Id, r => r.Nome);
@@ -132,7 +132,9 @@ public class JogoAppService
                 {
                     Numero = passageiroNum++,
                     Nome = p?.Nome ?? "?",
-                    IsLider = a.IsLider
+                    IsLider = a.IsLider,
+                    UsuarioId = p?.UsuarioId ?? Guid.Empty,
+                    Telefone = null // Telefone não está disponível em Passageiro diretamente
                 };
             }).ToList();
 
@@ -148,13 +150,17 @@ public class JogoAppService
             };
         }).ToList();
 
+        // Aplicar overrides de líder salvos no Jogo
+        AplicarLiderOverrides(jogo, veiculosDto);
+
         int esperaNum = 1;
         var esperaDto = resultado.ListaEspera.Select(p =>
             new PassageiroDto
             {
                 Numero = esperaNum++,
                 Nome = p.Nome,
-                IsLider = false
+                IsLider = false,
+                UsuarioId = p.UsuarioId
             }).ToList();
 
         return new ResultadoAlocacaoDto
@@ -166,6 +172,49 @@ public class JogoAppService
             Erros = resultado.Erros,
             Sucesso = resultado.Sucesso
         };
+    }
+
+    /// <summary>
+    /// Aplica os overrides de líder salvos no Jogo, sobrescrevendo
+    /// a liderança definida pelo algoritmo de alocação.
+    /// </summary>
+    private static void AplicarLiderOverrides(Jogo jogo, List<VeiculoDto> veiculosDto)
+    {
+        foreach (var veiculoDto in veiculosDto)
+        {
+            var liderOverrideId = jogo.ObterLiderOverride(veiculoDto.Ordem);
+            if (liderOverrideId is null)
+                continue;
+
+            foreach (var passageiro in veiculoDto.Passageiros)
+            {
+                passageiro.IsLider = passageiro.UsuarioId == liderOverrideId.Value;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Define manualmente um passageiro como líder de um veículo,
+    /// persistindo a preferência e retornando o resultado de alocação atualizado.
+    /// </summary>
+    public async Task<ResultadoAlocacaoDto> DefinirLiderAsync(
+        Guid jogoId, int veiculoOrdem, Guid passageiroUsuarioId, CancellationToken ct = default)
+    {
+        var jogo = await _jogoRepo.GetByIdAsync(jogoId, ct);
+        if (jogo is null)
+            return new ResultadoAlocacaoDto
+            {
+                JogoId = jogoId,
+                Erros = ["Jogo não encontrado."],
+                Sucesso = false
+            };
+
+        jogo.DefinirLiderOverride(veiculoOrdem, passageiroUsuarioId);
+        _jogoRepo.Update(jogo);
+        await _uow.CommitAsync(ct);
+
+        // Retorna o resultado já aplicando o novo override
+        return await AlocarJogoAsync(jogoId, ct);
     }
 
     public async Task<bool> RemoverAsync(Guid id, CancellationToken ct = default)

@@ -33,6 +33,8 @@ public class PresencaAppService
 
     /// <summary>
     /// Marca a presença de um usuário em um jogo e gera o registro de Passageiro.
+    /// Quando o usuário não tem rota definida (RotaEfetivaId null), o passageiro
+    /// será alocado posteriormente pelo algoritmo na van mais conveniente.
     /// </summary>
     public async Task<PresencaResponse?> MarcarPresencaAsync(
         Guid jogoId,
@@ -48,8 +50,13 @@ public class PresencaAppService
         if (presencasExistentes.Any())
             throw new DomainException("Usuário já possui presença marcada neste jogo.");
 
+        // Se o usuário não tem rota definida, RotaEfetivaId permanece null.
+        // O algoritmo de alocação (AlocadorService) tratará esses passageiros
+        // distribuindo-os na van mais conveniente.
+        var rotaEfetivaId = request.RotaEfetivaId;
+
         // Criar e salvar a Presenca PRIMEIRO (para que o Passageiro possa referenciá-la)
-        var presenca = new Presenca(request.UsuarioId, jogoId, request.RotaEfetivaId);
+        var presenca = new Presenca(request.UsuarioId, jogoId, rotaEfetivaId);
         await _presencaRepo.AddAsync(presenca, ct);
 
         // Criar passageiro (instância do usuário para este jogo)
@@ -57,7 +64,7 @@ public class PresencaAppService
             usuario.Id,
             presenca.Id,
             jogoId,
-            request.RotaEfetivaId,
+            rotaEfetivaId,
             usuario.Nome);
 
         await _passageiroRepo.AddAsync(passageiro, ct);

@@ -4,7 +4,7 @@ public class Presenca : AggregateRoot
 {
     public Guid UsuarioId { get; private set; }
     public Guid JogoId { get; private set; }
-    public Guid RotaEfetivaId { get; private set; }
+    public Guid? RotaEfetivaId { get; private set; }
     public DateTime ConfirmadoEm { get; private set; }
 
     // Navigation properties (EF Core)
@@ -15,7 +15,7 @@ public class Presenca : AggregateRoot
     // EF Core
     private Presenca() { }
 
-    public Presenca(Guid usuarioId, Guid jogoId, Guid rotaEfetivaId)
+    public Presenca(Guid usuarioId, Guid jogoId, Guid? rotaEfetivaId)
     {
         UsuarioId = usuarioId;
         JogoId = jogoId;

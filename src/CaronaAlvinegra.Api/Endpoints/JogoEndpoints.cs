@@ -60,5 +60,15 @@ public static class JogoEndpoints
         })
         .WithName("ObterAlocacao")
         .WithOpenApi();
+
+        // ── Definição manual de líder ──────────────────────
+        group.MapPost("/{jogoId:guid}/veiculos/{veiculoOrdem:int}/lider/{passageiroUsuarioId:guid}",
+            async (Guid jogoId, int veiculoOrdem, Guid passageiroUsuarioId, JogoAppService service, CancellationToken ct) =>
+        {
+            var result = await service.DefinirLiderAsync(jogoId, veiculoOrdem, passageiroUsuarioId, ct);
+            return result.Sucesso ? Results.Ok(result) : Results.BadRequest(result);
+        })
+        .WithName("DefinirLiderVeiculo")
+        .WithOpenApi();
     }
 }

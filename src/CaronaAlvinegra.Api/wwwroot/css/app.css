@@ -247,6 +247,24 @@ body {
 .btn-warning { background: var(--warning); color: var(--white); }
 .btn-warning:hover { opacity: 0.9; }
 
+.btn-lider {
+    background: none;
+    border: 1px solid var(--gray300);
+    color: var(--gray500);
+    font-size: 1rem;
+    padding: 0.1rem 0.35rem;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all var(--transition);
+    line-height: 1;
+    margin-left: auto;
+}
+.btn-lider:hover {
+    background: #fff3cd;
+    border-color: var(--warning);
+    color: #92400e;
+}
+
 .btn-sm { padding: 0.35rem 0.7rem; font-size: 0.8rem; }
 
 .btn-block { width: 100%; justify-content: center; }

@@ -631,7 +631,10 @@ async function gerenciarPresencas(jogoId) {
 async function togglePresenca(jogoId, usuarioId, checked, rotaId) {
     try {
         if (checked) {
-            await PresencaApi.marcar(jogoId, { usuarioId, rotaEfetivaId: rotaId });
+            // Quando o usuário não tem rota preferencial, rotaId vem como null ou "null" (string).
+            // Enviamos null (sem rota) para que o algoritmo aloque na van mais conveniente.
+            const rotaEfetivaId = (rotaId && rotaId !== 'null') ? rotaId : null;
+            await PresencaApi.marcar(jogoId, { usuarioId, rotaEfetivaId });
             toast('Presença marcada!', 'success');
         } else {
             // Find presenca by usuarioId to remove it
@@ -700,8 +703,9 @@ function exibirResultado(r) {
                     <ol class="passageiros-list" start="1">
                         ${v.passageiros.map(p => `
                             <li>
-                                ${p.isLider ? '<span class="lider-badge">Líder</span>' : ''}
+                                ${p.isLider ? '<span class="lider-badge">👑 Líder</span>' : ''}
                                 ${p.nome} ${p.telefone ? `&bull; ${p.telefone}` : ''}
+                                ${!p.isLider ? ` <button class="btn btn-sm btn-lider" onclick="definirLider('${r.jogoId}', ${v.ordem}, '${p.usuarioId}')" title="Tornar líder">👑</button>` : ''}
                             </li>`).join('')}
                     </ol>
                 </div>`;
@@ -724,6 +728,20 @@ function exibirResultado(r) {
 
     // Scroll to result
     container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+async function definirLider(jogoId, veiculoOrdem, usuarioId) {
+    try {
+        const resultado = await JogoApi.definirLider(jogoId, veiculoOrdem, usuarioId);
+        if (resultado.sucesso) {
+            toast('👑 Líder atualizado com sucesso!', 'success');
+            exibirResultado(resultado);
+        } else {
+            toast(`Erro: ${(resultado.erros || []).join(', ')}`, 'error');
+        }
+    } catch (err) {
+        toast(`Erro ao definir líder: ${err.message}`, 'error');
+    }
 }
 
 async function copiarWhatsApp(jogoId) {

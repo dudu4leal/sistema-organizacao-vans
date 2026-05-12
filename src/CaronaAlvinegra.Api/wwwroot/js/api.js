@@ -61,6 +61,8 @@ const JogoApi = {
     obter: (id) => apiRequest('GET', `/api/jogos/${id}`),
     alocar: (id) => apiRequest('POST', `/api/jogos/${id}/alocar`),
     obterAlocacao: (id) => apiRequest('GET', `/api/jogos/${id}/alocar`),
+    definirLider: (jogoId, veiculoOrdem, usuarioId) =>
+        apiRequest('POST', `/api/jogos/${jogoId}/veiculos/${veiculoOrdem}/lider/${usuarioId}`),
     remover: (id) => apiRequest('DELETE', `/api/jogos/${id}`),
 };
 
